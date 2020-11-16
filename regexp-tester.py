@@ -93,8 +93,8 @@ class Application(Gtk.Window):
         self.show_all()
 
     def __on_result_menu_save_to_file(self, e):
-        dlg = Gtk.FileChooserDialog('Saving result list', self, Gtk.FILE_CHOOSER_ACTION_SAVE, (Gtk.STOCK_CANCEL,Ggtk.RESPONSE_CANCEL, Gtk.STOCK_OK, Gtk.RESPONSE_OK))
-        if dlg.run() == Gtk.RESPONSE_OK:
+        dlg = Gtk.FileChooserDialog('Saving result list', self, Gtk.FileChooserAction.SAVE, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        if dlg.run() == Gtk.ResponseType.OK:
             filename = dlg.get_filename()
             f = open(filename, 'w')
             for row in self.__list_store:
