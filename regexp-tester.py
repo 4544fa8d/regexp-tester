@@ -56,8 +56,6 @@ class Application(Gtk.Window):
         flags_table.attach(self.__debug_flag, 1, 2, 0, 1)
         self.__ignorecase_flag = Gtk.CheckButton('IGNORECASE')
         flags_table.attach(self.__ignorecase_flag, 2, 3, 0, 1)
-        self.__locale_flag = Gtk.CheckButton('LOCALE')
-        flags_table.attach(self.__locale_flag, 3, 4, 0, 1)
         self.__multiline_flag = Gtk.CheckButton('MULTILINE')
         self.__multiline_flag.set_active(True)
         flags_table.attach(self.__multiline_flag, 0, 1, 1, 2)
@@ -108,6 +106,7 @@ class Application(Gtk.Window):
     def __onRegExpEntryChange(self, e):
         #wyczyść listę wyników
         self.__list_store.clear()
+
         #pobierz wyrażenie regularne i tekst do przeszukania
         regExp = self.__regExpEntry.get_text()
         text_buffer = self.__textView.get_buffer()
@@ -122,16 +121,15 @@ class Application(Gtk.Window):
                 flags |= re.DEBUG
             if self.__ignorecase_flag.get_active():
                 flags |= re.IGNORECASE
-            if self.__locale_flag.get_active():
-                flags |= re.LOCALE
             if self.__multiline_flag.get_active():
                 flags |= re.MULTILINE
             if self.__dotall_flag.get_active():
                 flags |= re.DOTALL
             if self.__verbose_flag.get_active():
                 flags |= re.VERBOSE
+
             #wyszukaj wszystkie wystąpienia wyrażenia w tekście
-            for m in re.finditer(regExp, text, flags):
+            for m in re.finditer(regExp, text):
                 s = m.group(0)
                 self.__list_store.insert(-1, (s, m.start(), m.end()))
 
